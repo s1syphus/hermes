@@ -12,7 +12,10 @@ void Game::testAlphaBeta(){
 
 	cout<<"this is to test alpha beta\n";
 
-	AlphaBeta myTree;
+	AlphaBeta myTree1;
+	myTree1.alphaBetaTest();
+
+	cout<<"meh\n";
 
 	}
 
@@ -29,15 +32,15 @@ void Game::playTicTacToe(){
 	char player[2] = { 'X', 'O'};
 
 	while(!gameOver){
-		if(side == 0){
+//		if(side == 0){
 			cout<<"Player "<<player[side]<<" select square> ";
 			cin>>move;			
 			cout<<endl;		
-			}
-		else{
+//			}
+//		else{
 			//generate moves, will also add in a 'pick best'
 			
-			}	
+//			}	
 
 	
 		if(myGame.moveValid(move)){
