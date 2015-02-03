@@ -10,7 +10,11 @@ using namespace std;
 int main(int argc, char* argv[]){
 
 	Game game;
-	game.playTicTacToe();
+
+//	game.playTicTacToe();
+
+	game.testAlphaBeta();
+
 
 	//for testing just starting tictactoe, change to commandline args soon	
 

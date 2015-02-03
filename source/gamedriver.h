@@ -26,7 +26,7 @@ class Game{
 		Game();
 		//Game(enum Game); // fix this
 		void playTicTacToe();
-
+		void testAlphaBeta();
 	};
 
 
