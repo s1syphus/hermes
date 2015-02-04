@@ -3,6 +3,8 @@
 
 #include "alphabeta.h"
 
+
+/*
 Node::Node(){
 	}
 
@@ -114,6 +116,6 @@ int AlphaBeta::runAlphaBeta(Node* node, int depth, int alpha, int beta, int side
 		return v;	
 	}
 
-
+*/
 
 

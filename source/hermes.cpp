@@ -11,9 +11,9 @@ int main(int argc, char* argv[]){
 
 	Game game;
 
-//	game.playTicTacToe();
+	game.playTicTacToe();
 
-	game.testAlphaBeta();
+//	game.testAlphaBeta();
 
 
 	//for testing just starting tictactoe, change to commandline args soon	

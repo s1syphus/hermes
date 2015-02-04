@@ -13,7 +13,7 @@
 using namespace std;
 
 #define MAX_DEPTH 4
-
+/*
 
 class Node{
 
@@ -57,7 +57,7 @@ class AlphaBeta{
 
 
 
-
+*/
 
 
 

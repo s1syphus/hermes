@@ -11,7 +11,7 @@ using namespace std;
 class tBoard{
 
 	private:
-		int* board;
+		int* intBoard;
 		int value;
 		int side;
 
@@ -21,11 +21,13 @@ class tBoard{
 		void setBoard(int*);
 		void setValue(int);
 		void setSide(int);
+		void updateBoard(int, int);
 
 		int* getBoard();
 		int getValue();	
 		int getSide();	
 
+		
 	};
 
 #endif

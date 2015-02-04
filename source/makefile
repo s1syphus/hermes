@@ -1,5 +1,5 @@
 
-OBJS = hermes.o gamedriver.o tictactoe.o alphabeta.o
+OBJS = hermes.o gamedriver.o tictactoe.o alphabeta.o boards.o
 CC = g++
 DEBUG = -g
 CFLAGS = -Wall -c $(DEBUG)
@@ -19,6 +19,9 @@ tictactoe.o: tictactoe.h tictactoe.cpp boards.h
 
 alphabeta.o: alphabeta.cpp alphabeta.h boards.h
 	$(CC) $(CFLAGS) alphabeta.cpp
+
+boards.o: boards.cpp boards.h
+	$(CC) $(CFLAGS) boards.cpp
 
 clean:
 	rm *.o hermes

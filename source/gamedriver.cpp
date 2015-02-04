@@ -31,17 +31,10 @@ void Game::playTicTacToe(){
 	char player[2] = { 'X', 'O'};
 
 	while(!gameOver){
-//		if(side == 0){
-			cout<<"Player "<<player[side]<<" select square> ";
-			cin>>move;			
-			cout<<endl;		
-//			}
-//		else{
-			//generate moves, will also add in a 'pick best'
-			
-//			}	
+		cout<<"Player "<<player[side]<<" select square> ";
+		cin>>move;			
+		cout<<endl;		
 
-	
 		if(myGame.moveValid(move)){
 			myGame.makeMove(move,side);
 			gameOver = myGame.gameOver(move,side);
