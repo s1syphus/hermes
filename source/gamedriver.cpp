@@ -12,10 +12,9 @@ void Game::testAlphaBeta(){
 
 	cout<<"this is to test alpha beta\n";
 
-	AlphaBeta myTree1;
-	myTree1.alphaBetaTest();
+	TicTacToe myGame;
+	myGame.testAlpha();
 
-	cout<<"meh\n";
 
 	}
 

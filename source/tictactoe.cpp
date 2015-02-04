@@ -4,7 +4,10 @@
 #include "tictactoe.h"
 
 TicTacToe::TicTacToe(){
-	resetBoard();
+	board = new int[9];
+	for(int i = 0; i < 9; i++){
+		board[i] = 2;
+		}
 	player[0] = 'X';
 	player[1] = 'O';
 	player[2] = ' ';
@@ -14,34 +17,56 @@ TicTacToe::~TicTacToe(){
 	//free up memory
 	}
 
-int TicTacToe::evaluateMove(){
+void TicTacToe::genAllMoves(int *board, Node* parent, vector<Node*>* moves, int side){
 
-	//this is going to send the numbers to minimax...
+	//generates all valid moves for current board position
 
-	//lets get minimax working first
+	Node* newNode;	
 
-	return 0;
+	for(int i =0; i < 9; i++){
+		if(board[i] == 2){
+			//make new node
+			moves.push_back(newNode);
+			}
+		}
+	
+	
+
 	}
 
+void TicTacToe::testAlpha(){
 
 
+	board[0] = 1;
+	board[1] = 2;
+	board[2] = 0;
+
+	board[3] = 0;
+	board[4] = 2;
+	board[5] = 2;
+
+	board[6] = 0;
+	board[7] = 1;
+	board[8] = 1;
+
+	printBoard();
+
+	//turn this into a loop to go through all moves until game is over/max depth
+
+	/*
+	vector<Node*> moves;
+
+	Node* parent = new Node(NULL, board, 0, 0);
+	genAllMoves(board, moves, 0);
+			
+	for(int i = 0; i < moves.size(); i++){
+		tempBoard = moves.pop_back().getBoard();
+		}
+*/	
+	
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	}
 
 
 
@@ -112,12 +137,6 @@ void TicTacToe::printInstructions(){
 	cout<<"0 | 1 | 2\n---------\n3 | 4 | 5\n---------\n6 | 7 | 8 "<<endl<<endl;
 	}
 
-void TicTacToe::resetBoard(){
-	for(int i = 0; i < 9; i++){
-		board[i] = 2;
-		}
-	}
-
 bool TicTacToe::moveValid(int move){
 	if(move < 0){
 		return false;
@@ -132,7 +151,6 @@ bool TicTacToe::moveValid(int move){
 	}
 
 void TicTacToe::makeMove(int move, int side){
-
 	switch(side){
 		case 0: //'X'
 			board[move] = 0;

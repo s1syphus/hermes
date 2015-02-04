@@ -6,10 +6,15 @@
 Node::Node(){
 	}
 
-Node::Node(Node* parent, int value){
+Node::Node(Node* parent, Board* board, int value, int side){
 	parent = parent;
 	value = value;
 	}
+
+tBoard* Node::getBoard(){
+	return board;
+	}
+
 
 int Node::getValue(){
 	return value;
@@ -60,46 +65,29 @@ void AlphaBeta::alphaBetaTest(){
 	
 	Node* root = new Node(NULL, 0);
 
-	addMove(root, 0, 0);
+//	cout<<"building the tree\n";
+//	addMove(root, 0, 0);
 
 	cout<<"here\n";	
 	runAlphaBeta(root, 4, INT_MIN, INT_MAX, 0);	
 	
 	}
 
-
-
-
-void AlphaBeta::addMove(Node* prevMove, int curMoveValue, int depth){
-
-	Node* curNode = new Node(prevMove, curMoveValue);
-	int numChildren;
-	int value = 0;
-
-	while(depth < MAX_DEPTH and numChildren != 0){
-		cout<<"Enter number of children >";
-		cin>>numChildren;
-		addMove(curNode, value, depth + 1);
-		numChildren--;
-		}
-	cout<<"Enter value >";
-	cin>>value;
-	curNode->setValue(value);
-	prevMove->updateChildren(curNode);
-
-	
-	}
-
 int AlphaBeta::runAlphaBeta(Node* node, int depth, int alpha, int beta, int side){
 
 	int v;
+	int value;
 	int numChildren = 1;
 
+
 	if(depth == 0){
-		return node->getValue();
+		cout<<"value > ";
+		cin>>value;
+		return value;
 		}
 
-		if(side == 0){
+	cout<<"depth: "<<depth<<endl;
+	if(side == 0){
 		//maximizing player
 		v = INT_MIN;
 		for(int i = 0; i < numChildren; i++){
@@ -108,7 +96,7 @@ int AlphaBeta::runAlphaBeta(Node* node, int depth, int alpha, int beta, int side
 			alpha = max(alpha, v);
 			if(beta <= alpha){
 				break;
-				}
+				 }
 			}	
 		}		
 	else{

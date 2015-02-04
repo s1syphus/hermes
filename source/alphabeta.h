@@ -9,6 +9,7 @@
 
 //get rid of this later
 #include <iostream>
+#include "boards.h"
 using namespace std;
 
 #define MAX_DEPTH 4
@@ -21,12 +22,13 @@ class Node{
 		int value;
 		Node* parent;
 		vector<Node*> children;
-		//int, or something move
-		
+		int side;
+		//will overload board structure later	
+		tBoard *board;
 	public:
 
 		Node();
-		Node(Node*, int);
+		Node(Node*, tBoard*, int, int);
 		
 		//Accessors
 		int getValue();
@@ -34,6 +36,7 @@ class Node{
 		Node* getChild();
 		void updateChildren(Node*);
 		void setValue(int);
+		tBoard* getBoard();
 		//return move
 	};
 

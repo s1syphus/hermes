@@ -14,10 +14,10 @@ hermes.o: hermes.cpp gamedriver.h
 gamedriver.o: gamedriver.cpp gamedriver.h tictactoe.h alphabeta.h
 	$(CC) $(CFLAGS) gamedriver.cpp
 
-tictactoe.o: tictactoe.h tictactoe.cpp
+tictactoe.o: tictactoe.h tictactoe.cpp boards.h
 	$(CC) $(CFLAGS) tictactoe.cpp
 
-alphabeta.o: alphabeta.cpp alphabeta.h
+alphabeta.o: alphabeta.cpp alphabeta.h boards.h
 	$(CC) $(CFLAGS) alphabeta.cpp
 
 clean:
