@@ -36,8 +36,8 @@ void Game::playTicTacToe(){
 		cout<<endl;		
 
 		if(myGame.moveValid(move)){
-			myGame.makeMove(move,side);
-			gameOver = myGame.gameOver(move,side);
+			myGame.makeMove(myGame.getCurBoard(), move);
+			gameOver = myGame.gameOver(myGame.getCurBoard(), move,side);
 			}
 		else{
 			cout<<"learn how to type/follow directions...\n";

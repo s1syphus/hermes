@@ -5,12 +5,18 @@
 #define TICTACTOE_H
 
 #include <iostream>
-#include <vector>
+#include <stack>
 
 #include "alphabeta.h"
 #include "boards.h"
 
+#define TMAX_DEPTH 2
+
 using namespace std;
+
+//at some point make accessor functions const
+//and make sure I don't mess up my structures
+
 
 class TicTacToe{
 
@@ -23,17 +29,24 @@ class TicTacToe{
 		~TicTacToe(); //deconstructor, make this later
 		void resetBoard();
 		void printBoard();
+		void printBoard(tBoard*);
 		void printInstructions();
-		void makeMove(int,int);
+		tBoard* makeMove(tBoard*, int);
+		tBoard* unmakeMove(tBoard*, int);
 		bool moveValid(int);
-		bool gameOver(int,int);
+		bool moveValid(tBoard*, int);	//overloaded, might fix later
+		bool gameOver(tBoard*, int,int);
+		bool gameOver(tBoard*);	//overloaded, might fix later
+		tBoard* getCurBoard();
+
+
+		//debug
+		void printMoves(vector<int>, int);
 
 		void testAlpha();
+		void genMoves(tBoard*);	
+		vector<int> availableMoves(tBoard*);
 
-		//skeleton functions
-
-
-		int evaluateMove();
 	};
 
 

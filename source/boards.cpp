@@ -15,7 +15,10 @@ tBoard::tBoard(int* board, int value, int side){
 	}
 
 void tBoard::setBoard(int *myBoard){
-	intBoard = myBoard;
+	intBoard = new int[9];
+	for(int i = 0; i < 9; i++){
+		intBoard[i] = myBoard[i];
+		}
 	}
 
 void tBoard::setValue(int myValue){
@@ -24,6 +27,10 @@ void tBoard::setValue(int myValue){
 
 void tBoard::setSide(int mySide){
 	side = mySide;
+	}
+
+void tBoard::switchSide(){
+	side ^= 1;
 	}
 
 void tBoard::updateBoard(int move, int side){

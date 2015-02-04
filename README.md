@@ -8,6 +8,12 @@ differences will be in the move generation and the evaluation functions (which w
 the game client)
 
 
+
+
+REFACTOR!!!!!!!!!!!!!!!! Code is a mess right now
+
+
+
 To do:
 
 	Design driver

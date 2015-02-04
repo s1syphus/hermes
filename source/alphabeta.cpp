@@ -3,7 +3,6 @@
 
 #include "alphabeta.h"
 
-
 /*
 Node::Node(){
 	}

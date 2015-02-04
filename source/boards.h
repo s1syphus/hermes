@@ -22,11 +22,13 @@ class tBoard{
 		void setValue(int);
 		void setSide(int);
 		void updateBoard(int, int);
+		void switchSide();		
+		
 
 		int* getBoard();
 		int getValue();	
 		int getSide();	
-
+	
 		
 	};
 
