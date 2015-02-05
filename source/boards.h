@@ -24,12 +24,13 @@ class tBoard{
 		void updateBoard(int, int);
 		void switchSide();		
 		
-
 		int* getBoard();
 		int getValue();	
 		int getSide();	
 	
-		
+//		tBoard* makeMove(tBoard*, int);
+//		tBoard* unmakeMove(tBoard*, int);
+
 	};
 
 #endif

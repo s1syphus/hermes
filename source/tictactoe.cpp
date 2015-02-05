@@ -65,7 +65,22 @@ void TicTacToe::testAlpha(){
 	//fix this at some point, kind of hacky
 	tBoard* myBoard = new tBoard(newBoard, 0, 0);
 	printBoard(myBoard);
-	genMoves(myBoard);
+	//genMoves(myBoard);
+
+	int* blankBoard = new int[9];
+	for(int i = 0; i < 9; i++){
+		blankBoard[i] = 2;
+		}
+
+	tBoard* alpha = new tBoard(blankBoard, INT_MIN, 0);
+	tBoard* beta = new tBoard(blankBoard, INT_MAX, 0);
+
+	cout<<"here\n";	
+	myBoard = alphaBeta(myBoard, 3, alpha, beta, 0);
+	
+	cout<<"Best move:\n";
+	printBoard(myBoard);
+
 	}
 
 void TicTacToe::genMoves(tBoard* myBoard){
@@ -85,10 +100,10 @@ void TicTacToe::genMoves(tBoard* myBoard){
 		if(!gameOver(tempBoard)){
 			for(int i = 0; i < 9; i++){
 				if(moveValid(tempBoard, i)){
-					cout<<"adding board with move: "<<i<<"\tfor player: "<<tempBoard->getSide()<<endl;
-					if(gameOver(makeMove(tempBoard,i))){
-						cout<<"game over\n";
-						}	
+//					cout<<"adding board with move: "<<i<<"\tfor player: "<<tempBoard->getSide()<<endl;
+//					if(gameOver(makeMove(tempBoard,i))){
+//						cout<<"game over\n";
+//						}	
 					allBoards.push(makeMove(tempBoard,i));
 					}
 				}
@@ -194,12 +209,62 @@ bool TicTacToe::gameOver(tBoard* myGameBoard){
 
 	}
 
+tBoard* TicTacToe::alphaBeta(tBoard* myBoard, int depth, tBoard* alpha, tBoard* beta, int side ){
 
+	cout<<"depth: "<<depth<<"\n";
 
+	cout<<"current board:\n";
+	printBoard(myBoard);
+	cout<<"\n";
 
+	tBoard* tempBoard = new tBoard(myBoard->getBoard(), myBoard->getValue(), myBoard->getSide());
 
+	tBoard* v = new tBoard(myBoard->getBoard(), myBoard->getValue(), myBoard->getSide());
+	
+	if(depth == 0){
+		return myBoard;
+		}	
+	if(gameOver(myBoard)){
+		if(myBoard->getSide() == 0){
+			tempBoard->setValue(10);
+			}
+		else{
+			tempBoard->setValue(-10);
+			}
+		return tempBoard;
+		}
+	if(side == 0){
+		v->setValue(INT_MIN);
+		for(int i = 0; i < 9; i++){
+			if(moveValid(myBoard, i)){
+				//child node
+				tempBoard = makeMove(myBoard, i);
+				v = maxBoard(v,alphaBeta(tempBoard, depth -1, alpha, beta, side^1));
+				alpha = maxBoard(alpha, v);
+				if(beta <= alpha){
+					break;
+					}	
+				}
+			}
+		}
+	else{
+		v->setValue(INT_MAX);
+		for(int i = 0; i < 9; i++){
+			if(moveValid(myBoard, i)){
+				//child node
+				tempBoard = makeMove(myBoard, i);
+				v = minBoard(v,alphaBeta(tempBoard, depth -1, alpha, beta, side^1));
+				beta = minBoard(alpha, v);
+				if(beta <= alpha){
+					break;
+					}
+				}
+			}
+		}
 
+		return v;
 
+	}
 
 
 
@@ -301,5 +366,29 @@ tBoard* TicTacToe::unmakeMove(tBoard* myBoard, int move){
 
 	//fix this
 	return myBoard;
+	}
+
+
+
+tBoard* TicTacToe::maxBoard(tBoard* first, tBoard* second){
+	tBoard* maximum;
+	if(first->getValue() >= second->getValue()){
+		maximum	= new tBoard(first->getBoard(), first->getValue(), first->getSide());
+		}
+	else{
+		maximum = new tBoard(second->getBoard(), second->getValue(), second->getSide());
+		}	
+	return maximum;
+	}
+
+tBoard* TicTacToe::minBoard(tBoard* first, tBoard* second){
+	tBoard* minimum;
+	if(first->getValue() <= second->getValue()){
+		minimum = new tBoard(first->getBoard(), first->getValue(), first->getSide());
+		}
+	else{
+		minimum = new tBoard(second->getBoard(), second->getValue(), second->getSide());
+		}	
+	return minimum;
 	}
 

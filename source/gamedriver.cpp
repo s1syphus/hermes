@@ -10,7 +10,6 @@ Game::Game(){
 
 void Game::testAlphaBeta(){
 
-	cout<<"this is to test alpha beta\n";
 
 	TicTacToe myGame;
 	myGame.testAlpha();
@@ -34,14 +33,6 @@ void Game::playTicTacToe(){
 		cout<<"Player "<<player[side]<<" select square> ";
 		cin>>move;			
 		cout<<endl;		
-
-		if(myGame.moveValid(move)){
-			myGame.makeMove(myGame.getCurBoard(), move);
-			gameOver = myGame.gameOver(myGame.getCurBoard(), move,side);
-			}
-		else{
-			cout<<"learn how to type/follow directions...\n";
-			}
 
 		myGame.printBoard();
 		cout<<endl;

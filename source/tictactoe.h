@@ -39,6 +39,12 @@ class TicTacToe{
 		bool gameOver(tBoard*);	//overloaded, might fix later
 		tBoard* getCurBoard();
 
+		//might refactor this at some point, putting all alphabeta here
+
+		tBoard* alphaBeta(tBoard*, int, tBoard*, tBoard*, int);
+		tBoard* maxBoard(tBoard*, tBoard*);
+		tBoard* minBoard(tBoard*, tBoard*);
+
 
 		//debug
 

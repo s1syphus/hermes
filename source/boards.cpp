@@ -14,6 +14,37 @@ tBoard::tBoard(int* board, int value, int side){
 	setSide(side);
 	}
 
+
+
+
+/*
+
+
+tBoard* TicTacToe::makeMove(tBoard* myBoard, int move ){
+	tBoard* newBoard = new tBoard(myBoard->getBoard(), myBoard->getValue(), myBoard->getSide());
+	switch(newBoard->getSide()){
+		case 0: //'X'
+			newBoard->updateBoard(move, 0);
+			break;
+		case 1: //'O'
+			newBoard->updateBoard(move, 1);
+			break;
+		default:
+			break;
+		}
+	newBoard->switchSide();
+	return newBoard;
+	}
+
+tBoard* TicTacToe::unmakeMove(tBoard* myBoard, int move){
+
+	//fix this
+	return myBoard;
+	}
+
+*/
+
+
 void tBoard::setBoard(int *myBoard){
 	intBoard = new int[9];
 	for(int i = 0; i < 9; i++){
@@ -38,7 +69,11 @@ void tBoard::updateBoard(int move, int side){
 	}
 
 int* tBoard::getBoard(){
-	return intBoard;
+	int* newBoard = new int[9];
+	for(int i = 0; i < 9; i++){
+		newBoard[i] = intBoard[i];
+		}
+	return newBoard;
 	}
 
 int tBoard::getValue(){

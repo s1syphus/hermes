@@ -41,24 +41,25 @@ class Node{
 		//return move
 	};
 
-
+*/
 
 class AlphaBeta{
 
 	private:
-		Node* root;
+//		Node* root;
+		tBoard *board;
 	public:
 		AlphaBeta();
-		int runAlphaBeta(Node*, int, int, int, int);			
-		void addMove(Node*, int, int);
-		int max(int, int);
-		int min(int, int);
-		void alphaBetaTest();	
+//		tBoard* alphaBetaFunction(tBoard*, int, tBoard*, tBoard*, int);
+//		void addMove(Node*, int, int);
+//		tBoard* maxBoard(tBoard*, tBoard*);
+//		tBoard* minBoard(tBoard*, tBoard*);
+//		void alphaBetaTest();	
+
 		};
 
 
 
-*/
 
 
 #endif
