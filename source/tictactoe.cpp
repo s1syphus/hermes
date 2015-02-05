@@ -24,16 +24,16 @@ void TicTacToe::testAlpha(){
 
 /*
 	newBoard[0] = 1;
-	newBoard[1] = 1;
-	newBoard[2] = 1;
+	newBoard[1] = 2;
+	newBoard[2] = 0;
 
 	newBoard[3] = 0;
-	newBoard[4] = 1;
-	newBoard[5] = 0;
+	newBoard[4] = 0;
+	newBoard[5] = 2;
 
-	newBoard[6] = 2;
-	newBoard[7] = 0;
-	newBoard[8] = 0;
+	newBoard[6] = 0;
+	newBoard[7] = 1;
+	newBoard[8] = 1;
 
 	tBoard* myBoard = new tBoard(newBoard, 0, 1);
 
@@ -45,7 +45,9 @@ void TicTacToe::testAlpha(){
 	else{
 		cout<<"not over\n";
 		}
-	*/
+
+*/
+	
 
 	newBoard[0] = 1;
 	newBoard[1] = 2;
@@ -70,7 +72,6 @@ void TicTacToe::genMoves(tBoard* myBoard){
 
 	//this generates and prints out all moves, this will be used in alphabeta
 
-
 	tBoard* tempBoard;
 	stack<tBoard*> allBoards;
 	allBoards.push(myBoard);
@@ -78,85 +79,22 @@ void TicTacToe::genMoves(tBoard* myBoard){
 	while(!allBoards.empty()){
 		tempBoard = allBoards.top();
 		allBoards.pop();
+//		cout<<"examining board with player: "<<tempBoard->getSide()<<"\n";
+//		printBoard(tempBoard);
+//		cout<<endl;
 		if(!gameOver(tempBoard)){
 			for(int i = 0; i < 9; i++){
 				if(moveValid(tempBoard, i)){
 					cout<<"adding board with move: "<<i<<"\tfor player: "<<tempBoard->getSide()<<endl;
+					if(gameOver(makeMove(tempBoard,i))){
+						cout<<"game over\n";
+						}	
 					allBoards.push(makeMove(tempBoard,i));
 					}
 				}
 			}
 		}
 	}
-
-/*
-vector<int> TicTacToe::genMoves(tBoard* myBoard, int depth){
-
-	vector<int> myMoves, tempMoves;
-	int tempMove;
-	tempMoves = availableMoves(myBoard);
-	myMoves.insert(myMoves.end(), tempMoves.begin(), tempMoves.end());
-	printMoves(myMoves, depth);
-	if(depth >= TMAX_DEPTH){// || myMoves.empty()){
-		cout<<"returning due to depth\n";
-		return myMoves;
-		}	
-	else{
-		tempMove = myMoves.back();
-		myMoves.pop_back();
-		myBoard = makeMove(myBoard, tempMove, myBoard->getSide());
-		cout<<"making move: "<<tempMove<<"\tat depth: "<<depth<<endl;
-		if(gameOver(myBoard,tempMove,myBoard->getSide()^1)){
-			cout<<"game is over!\n";
-			return myMoves;
-			}
-		tempMoves = genMoves(myBoard, depth+1);
-		myMoves.insert(myMoves.end(), tempMoves.begin(), tempMoves.end());
-		}
-	return myMoves;
-	}
-*/
-void TicTacToe::printMoves(vector<int> moves, int depth){
-	cout<<"Moves at depth: "<<depth<<": ";		
-	while(!moves.empty()){
-		cout<<moves.back()<<"\t";
-		moves.pop_back();
-		}
-	cout<<"\n";
-	}
-
-
-vector<int> TicTacToe::availableMoves(tBoard* myBoard){
-	vector<int> moves;
-
-	if(gameOver(myBoard)){
-		//this needs to be working
-		moves.clear();
-		return moves;		
-		}
-
-	for(int i = 0; i < 9; i++){
-		if(moveValid(myBoard, i)){
-			moves.push_back(i);
-			}
-		}
-	return moves;
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 bool TicTacToe::moveValid(tBoard* myBoard, int move){
@@ -199,61 +137,60 @@ bool TicTacToe::gameOver(tBoard* myGameBoard){
 
 	bool over = true;
 	int* board = myGameBoard->getBoard();
-	int side = myGameBoard->getSide()^1;	//sides are doing weird things
 
-	//check columns
-	
-	for(int i = 0; i < 3; i++){
+	for(int side = 0; side < 2; side++){
+		//check columns
+		
+		for(int i = 0; i < 3; i++){
+			over = true;
+			for(int j = i; j< 9; j += 3){
+				if(board[j] != side){
+					over = false;		
+					}
+				}
+			if(over){
+				return over;
+				}
+			}
+
+		//check rows
+		for(int i = 0; i < 9; i += 3){
+			over = true;
+			for(int j = i; j < (i+3); j++){
+				if(board[j] != side){
+					over = false;		
+					}
+				}
+			if(over){
+				return over;
+				}
+			}
+
+		//diagonal one
+		
 		over = true;
-		for(int j = i; j< 9; j += 3){
-			if(board[j] != side){
+		for(int i = 0; i < 9; i+=4){
+			if(board[i] != side){
 				over = false;		
 				}
 			}
 		if(over){
 			return over;
 			}
-		}
 
-	//check rows
-	for(int i = 0; i < 9; i += 3){
+		//other diagonal	
 		over = true;
-		for(int j = i; j < (i+3); j++){
-			if(board[j] != side){
+		for(int i = 2; i < 7; i+=2){
+			if(board[i] != side){
 				over = false;		
 				}
 			}
 		if(over){
 			return over;
 			}
-		}
+		}	
 
-	//diagonal one
-	
-	over = true;
-	for(int i = 0; i < 9; i+=4){
-		if(board[i] != side){
-			over = false;		
-			}
-		}
-	if(over){
-		return over;
-		}
-
-	//other diagonal	
-	over = true;
-	for(int i = 0; i < 7; i+=2){
-		if(board[i] != side){
-			over = false;		
-			}
-		}
-	if(over){
-		return over;
-		}
-	
 	return false;
-
-
 
 	}
 

@@ -41,11 +41,9 @@ class TicTacToe{
 
 
 		//debug
-		void printMoves(vector<int>, int);
 
 		void testAlpha();
 		void genMoves(tBoard*);	
-		vector<int> availableMoves(tBoard*);
 
 	};
 
