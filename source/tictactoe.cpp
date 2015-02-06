@@ -65,13 +65,17 @@ void TicTacToe::testAlpha(){
 	//fix this at some point, kind of hacky
 	tBoard* myBoard = new tBoard(newBoard, 0, 0);
 	printBoard(myBoard);
-	//genMoves(myBoard);
-
 	int* blankBoard = new int[9];
+
 	for(int i = 0; i < 9; i++){
 		blankBoard[i] = 2;
 		}
 
+	tBoard* mehBoard = new tBoard(blankBoard, 0, 0);
+	genMoves(mehBoard);
+
+
+/*
 	tBoard* alpha = new tBoard(blankBoard, INT_MIN, 0);
 	tBoard* beta = new tBoard(blankBoard, INT_MAX, 0);
 
@@ -80,7 +84,7 @@ void TicTacToe::testAlpha(){
 	
 	cout<<"Best move:\n";
 	printBoard(myBoard);
-
+*/
 	}
 
 void TicTacToe::genMoves(tBoard* myBoard){
@@ -90,20 +94,15 @@ void TicTacToe::genMoves(tBoard* myBoard){
 	tBoard* tempBoard;
 	stack<tBoard*> allBoards;
 	allBoards.push(myBoard);
-
+	double counter = 0;
 	while(!allBoards.empty()){
 		tempBoard = allBoards.top();
 		allBoards.pop();
-//		cout<<"examining board with player: "<<tempBoard->getSide()<<"\n";
-//		printBoard(tempBoard);
-//		cout<<endl;
 		if(!gameOver(tempBoard)){
 			for(int i = 0; i < 9; i++){
 				if(moveValid(tempBoard, i)){
-//					cout<<"adding board with move: "<<i<<"\tfor player: "<<tempBoard->getSide()<<endl;
-//					if(gameOver(makeMove(tempBoard,i))){
-//						cout<<"game over\n";
-//						}	
+					cout<<counter<<endl;
+					counter++;
 					allBoards.push(makeMove(tempBoard,i));
 					}
 				}

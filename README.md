@@ -18,6 +18,9 @@ To do:
 
 	Design driver
 	Make dummy classes
+
+	Make look-up table for tictactoe (for fun)
+
 	Implement:
 		tic-tak-toe
 		connect4
