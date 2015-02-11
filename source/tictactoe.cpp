@@ -30,27 +30,69 @@ Board* TicTacToe::newBoard(){
 	}
 
 int TicTacToe::bestMove(){
+	Board* newBoard = curBoard;
+	Board* alphaBoard = newBoard;
+	alphaBoard->value = INT_MIN;
+	Board* betaBoard = newBoard;
+	betaBoard->value = INT_MAX;
+	Board* nextBoard = alphaBeta(newBoard, 4, alphaBoard, betaBoard);
 		
+	//return nextBoard->lastMove;	//might be wrong, might have to climb tree
+	
 	return 1;
+
+	}
+
+Board* TicTacToe::alphaBeta(Board* myBoard, int depth, Board* alpha, Board* beta){
+	Board* newBoard = myBoard;
+	Board* v = myBoard;
+	if(depth == 0){
+		return newBoard;
+		}
+	if(gameOver(newBoard)){
+		if(newBoard->side == 0){	//cpu is 'X'
+			newBoard->value = 10;
+			}
+		else{
+			newBoard->value = -10;
+			}
+		return newBoard;
+		}
+	if(side == 0){
+		v->value = INT_MIN;
+		//needs to be finished
+		}
+	else{
+		v->value = INT_MAX;
+		//needs to be finished
+		}
+
+	return newBoard;
+	
 	}
 
 
 
 
+Board* TicTacToe::makeMove(Board* myBoard, int move){
+	Board* newBoard = myBoard;
+	newBoard->parent = myBoard;
+	myBoard->board[move] = myBoard->side;	//move is valid (checked already)
+	myBoard->side ^= 1;
+	myBoard->lastMove = move;
+	myBoard->board[move] = myBoard->side;
+	return newBoard;
+	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+Board* TicTacToe::unmakeMove(Board* myBoard, int move){
+	Board* newBoard = myBoard;
+	newBoard->parent = myBoard;
+	myBoard->board[move] = 2;
+	myBoard->side ^= 1;
+	myBoard->lastMove = move;
+	myBoard->board[move] = myBoard->side;
+	return newBoard;
+	}
 
 
 

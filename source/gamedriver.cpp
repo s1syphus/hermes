@@ -40,7 +40,7 @@ void Game::playTicTacToe(){
 	One player
 	*/
 	while(!gameOver){
-		if(side == 0){
+		if(side == 1){
 			cout<<"Player "<<player[side]<<" select square> ";
 			cin>>move;			
 			cout<<endl;		

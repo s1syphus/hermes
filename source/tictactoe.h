@@ -4,7 +4,7 @@
 #define TICTACTOE_H
 
 #include <iostream>
-
+#include <climits>
 using namespace std;
 
 
@@ -53,17 +53,14 @@ class TicTacToe{
 		bool gameOver();
 		void makeMove(int);
 
-
 		//For AI
 		int bestMove();
-		/*
-		alphaBeta();	//add arguments soon
-		void genMoves(Board*, );	
+		Board* alphaBeta(Board*, int, Board*, Board*);	//add arguments soon
+
 		Board* makeMove(Board*, int);
 		Board* unmakeMove(Board*, int);
 		bool moveValid(const Board*, int);	//overloading for move gen
 
-		*/	
 
 
 	};
