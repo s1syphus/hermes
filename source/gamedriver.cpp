@@ -1,4 +1,3 @@
-
 //gamedriver.cpp
 
 #include "gamedriver.h"
@@ -8,16 +7,6 @@ Game::Game(){
 
 	}
 
-void Game::testAlphaBeta(){
-
-
-	TicTacToe myGame;
-	myGame.testAlpha();
-
-
-	}
-
-
 
 
 void Game::playTicTacToe(){
@@ -25,23 +14,52 @@ void Game::playTicTacToe(){
 	TicTacToe myGame;
 	int move;
 	int side = 0; //default, can change later I suppose
-	bool gameOver = false;
-	myGame.printInstructions();
 	char player[2] = { 'X', 'O'};
+	myGame.printCurBoard();
+	myGame.printInstructions();
+	bool gameOver = false;
 
+	/*	
+	Two player works!
+	*/
+/*
 	while(!gameOver){
 		cout<<"Player "<<player[side]<<" select square> ";
 		cin>>move;			
 		cout<<endl;		
-
-		myGame.printBoard();
-		cout<<endl;
+		if(myGame.moveValid(move)){
+			myGame.makeMove(move);
+			gameOver = myGame.gameOver();
+			}
+		myGame.printCurBoard();
 		side ^= 1;	// switches side, love dem bit operations
-
 		}
+	cout<<"Game is over!\nSide: "<<(side^1)<<" is the winner!\n";
+	*/	
+	/*
+	One player
+	*/
+	while(!gameOver){
+		if(side == 0){
+			cout<<"Player "<<player[side]<<" select square> ";
+			cin>>move;			
+			cout<<endl;		
+			}
+		else{
+			move = myGame.bestMove();
+			}
+		if(myGame.moveValid(move)){
+			myGame.makeMove(move);
+			gameOver = myGame.gameOver();
+			myGame.printCurBoard();
+			side ^= 1;
+			}
+		else{
+			cout<<"bad move\n";
+			}
+		}
+	cout<<"Game is over!\nSide: "<<(side^1)<<" is the winner!\n";
 
-		cout<<"Game is over!\nSide: "<<(side^1)<<" is the winner!\n";
-	
 	}
 
 

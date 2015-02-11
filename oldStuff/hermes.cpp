@@ -1,3 +1,4 @@
+
 //hermes.cpp
 
 #include "gamedriver.h"
@@ -11,6 +12,9 @@ int main(int argc, char* argv[]){
 	Game game;
 
 	game.playTicTacToe();
+
+
+
 	//for testing just starting tictactoe, change to commandline args soon	
 
 	return 0;

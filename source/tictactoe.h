@@ -1,65 +1,74 @@
-
 //tictactoe.h
 
 #ifndef TICTACTOE_H
 #define TICTACTOE_H
 
 #include <iostream>
-#include <stack>
-
-#include "alphabeta.h"
-#include "boards.h"
-
-#define TMAX_DEPTH 2
 
 using namespace std;
 
-//at some point make accessor functions const
-//and make sure I don't mess up my structures
 
+//Board struct
+
+struct Board{
+
+	Board* parent;
+	int lastMove;
+	int side;
+	int board[9];
+	int value;
+
+	};
+
+//Actual game class
 
 class TicTacToe{
 
 	private:
-		tBoard *board; //  'X' = 0, 'O' = 1, ' ' = 2
+			
+		Board* curBoard;
 		char player[3];
-		
+
 	public:
-		TicTacToe();//constructor
-		~TicTacToe(); //deconstructor, make this later
-		void resetBoard();
-		void printBoard();
-		void printBoard(tBoard*);
+
+		TicTacToe(); //Default constructor
+		~TicTacToe();	//deconstructor, need to do stuff here
+
+		//copy constructor for board
+		Board* operator=(const Board*);
+
+
+		//general functions (ie print)
+		
+		//for debug
+		void printBoard(Board*);
+		void printCurBoard();	
 		void printInstructions();
-		tBoard* makeMove(tBoard*, int);
-		tBoard* unmakeMove(tBoard*, int);
+
+		//Accessors
+
+		//Manipulators, mainly for curBoard
+		Board* newBoard();	
 		bool moveValid(int);
-		bool moveValid(tBoard*, int);	//overloaded, might fix later
-		bool gameOver(tBoard*, int,int);
-		bool gameOver(tBoard*);	//overloaded, might fix later
-		tBoard* getCurBoard();
-
-		//might refactor this at some point, putting all alphabeta here
-
-		tBoard* alphaBeta(tBoard*, int, tBoard*, tBoard*, int);
-		tBoard* maxBoard(tBoard*, tBoard*);
-		tBoard* minBoard(tBoard*, tBoard*);
+		bool gameOver();
+		void makeMove(int);
 
 
-		//debug
+		//For AI
+		int bestMove();
+		/*
+		alphaBeta();	//add arguments soon
+		void genMoves(Board*, );	
+		Board* makeMove(Board*, int);
+		Board* unmakeMove(Board*, int);
+		bool moveValid(const Board*, int);	//overloading for move gen
 
-		void testAlpha();
-		void genMoves(tBoard*);	
+		*/	
+
 
 	};
 
 
-
-
-
 #endif
-
-
-
 
 
