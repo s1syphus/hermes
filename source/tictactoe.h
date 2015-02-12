@@ -36,6 +36,7 @@ class TicTacToe{
 
 		//copy constructor for board
 		Board* operator=(const Board*);
+		Board operator=(const Board);
 
 
 		//general functions (ie print)
@@ -55,13 +56,13 @@ class TicTacToe{
 
 		//For AI
 		int bestMove();
-		Board* alphaBeta(Board*, int, Board*, Board*);	//add arguments soon
+		Board alphaBeta(Board, int, Board, Board);
 
-		Board* makeMove(Board*, int);
-		Board* unmakeMove(Board*, int);
-		bool moveValid(const Board*, int);	//overloading for move gen
-
-
+		bool gameOver(Board*);
+		Board makeMove(Board, int);
+		bool moveValid(Board*, int);	//overloading for move gen
+		Board max(Board, Board);
+		Board min(Board, Board);
 
 	};
 

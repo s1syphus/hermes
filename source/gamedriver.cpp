@@ -46,7 +46,9 @@ void Game::playTicTacToe(){
 			cout<<endl;		
 			}
 		else{
+			cout<<"CPU is playing\n";
 			move = myGame.bestMove();
+			cout<<"move = "<<move<<endl;
 			}
 		if(myGame.moveValid(move)){
 			myGame.makeMove(move);
