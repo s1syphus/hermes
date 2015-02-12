@@ -16,17 +16,20 @@
 using namespace std;
 
 #include "tictactoe.h"
+#include "connect4.h"
 
 class Game{
 
 	private:
 		TicTacToe ticTacToeGame;
+		Connect4 connect4Game;
 		//other games	
 	public:
 		//constructors
 		Game();
 		//Game(enum Game); // fix this
 		void playTicTacToe();
+		void playConnect4();
 	};
 
 

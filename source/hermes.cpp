@@ -10,8 +10,15 @@ int main(int argc, char* argv[]){
 
 	Game game;
 
-	game.playTicTacToe();
+	//parse command line for 1 or 2 player tictactoe
+
+//	game.playTicTacToe();
+	//this works
 	//for testing just starting tictactoe, change to commandline args soon	
+
+
+	game.playConnect4();
+
 
 	return 0;
 

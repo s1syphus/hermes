@@ -7,6 +7,24 @@ Game::Game(){
 
 	}
 
+void Game::playConnect4(){
+
+	Connect4 myGame;
+	myGame.printCurBoard();
+	int side = 0, move;
+	char player[2] = { 'X', 'O'};
+
+	cout<<"Select a column [0-6] > ";
+	cin>>move;	
+	
+	if(myGame.moveValid(move)){
+		myGame.makeMove(move);
+		}
+
+	myGame.printCurBoard();
+
+	}
+
 
 
 void Game::playTicTacToe(){
