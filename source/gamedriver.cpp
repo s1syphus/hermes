@@ -39,7 +39,8 @@ void Game::playTicTacToe(){
 	/*
 	One player
 	*/
-	while(!gameOver){
+	int counter = 0;
+	while((!gameOver) && (counter <= 8)){
 		if(side == 1){
 			cout<<"Player "<<player[side]<<" select square> ";
 			cin>>move;			
@@ -59,8 +60,15 @@ void Game::playTicTacToe(){
 		else{
 			cout<<"bad move\n";
 			}
+		counter++;
 		}
-	cout<<"Game is over!\nSide: "<<(side^1)<<" is the winner!\n";
+	if(gameOver){
+		cout<<"Game is over!\nSide: "<<(side^1)<<" is the winner!\n";
+		}
+	else{
+		cout<<"Game is a draw\n";
+		}
+
 
 	}
 

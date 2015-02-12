@@ -41,7 +41,6 @@ class TicTacToe{
 
 		//general functions (ie print)
 		
-		//for debug
 		void printBoard(Board*);
 		void printCurBoard();	
 		void printInstructions();
@@ -56,7 +55,9 @@ class TicTacToe{
 
 		//For AI
 		int bestMove();
-		Board alphaBeta(Board, int, Board, Board);
+		Board minimaxDecision(Board);
+		Board maxValue(Board);
+		Board minValue(Board);
 
 		bool gameOver(Board*);
 		Board makeMove(Board, int);

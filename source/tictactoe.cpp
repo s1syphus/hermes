@@ -14,7 +14,6 @@ TicTacToe::TicTacToe(){
 
 TicTacToe::~TicTacToe(){
 	//free up memory
-
 	}
 
 Board* TicTacToe::newBoard(){
@@ -31,11 +30,11 @@ Board* TicTacToe::newBoard(){
 
 int TicTacToe::bestMove(){
 	Board newBoard = *curBoard;
-	Board alphaBoard = newBoard;
-	alphaBoard.value = INT_MIN;
-	Board betaBoard = newBoard;
-	betaBoard.value = INT_MAX;
-	Board nextBoard = alphaBeta(newBoard, 10, alphaBoard, betaBoard);
+	Board nextBoard = minimaxDecision(newBoard);
+	if(nextBoard.lastMove == -1){
+		cout<<"da fuq?\n";
+		return 1;
+		}
 	return nextBoard.lastMove;
 	}
 
@@ -53,58 +52,52 @@ Board TicTacToe::min(Board first, Board second){
 	return second;
 	}
 
-Board TicTacToe::alphaBeta(Board myBoard, int depth, Board alpha, Board beta){
-	Board newBoard = myBoard;
+
+Board TicTacToe::minimaxDecision(Board myBoard){
+	Board bestBoard = myBoard;
+	Board tempBoard = myBoard;
+	bestBoard.value = INT_MIN;
+	tempBoard.value = INT_MIN;
+	for(int i = 0; i < 9; i++){
+		if(moveValid(&myBoard, i)){
+			tempBoard = minValue(makeMove(myBoard,i));
+				if(tempBoard.value > bestBoard.value){	
+				bestBoard = tempBoard;
+				bestBoard.lastMove = i;
+				}
+			}
+		}	
+	return bestBoard;
+	}
+
+Board TicTacToe::maxValue(Board myBoard){
 	Board v = myBoard;
-	if(depth == 0){
-		return newBoard;
+	if(gameOver(&myBoard)){
+		return myBoard;
 		}
-	if(gameOver(&newBoard)){
-		if(newBoard.side == 0){	//cpu is 'X'
-			newBoard.value = 10;
-			}
-		else{
-			newBoard.value = -10;
-			}
-		return newBoard;
+	v.value = INT_MIN;
+	for(int i = 0; i < 9; i++){
+		if(moveValid(&myBoard, i)){
+			v = max(v, minValue(makeMove(myBoard, i)));
+			}		
 		}
-	if(newBoard.side == 0){
-		v.value = INT_MIN;
-		for(int i = 0; i < 9; i++){
-			if(moveValid(&newBoard, i)){
-				v = max(v, alphaBeta(makeMove(newBoard,i),depth-1, alpha, beta));
-				alpha = max(alpha, v);
-				if(beta.value <= alpha.value){
-					break;
-					}
-				}
-			}
-		return v;
-		}
-	else{
-		v.value = INT_MAX;
-		for(int i = 0; i < 9; i++){
-			if(moveValid(&newBoard, i)){
-				v = min(v, alphaBeta(makeMove(newBoard, i),depth-1, alpha, beta));
-				beta = min(beta, v);
-				if(beta.value <= alpha.value){
-					break;
-					}
-				}
-			}
-		return v;
-		}		
+	return v;
 	}
 
 
-
-
-
-
-
-
-
-
+Board TicTacToe::minValue(Board myBoard){
+	Board v = myBoard;
+	if(gameOver(&myBoard)){
+		return myBoard;
+		}
+	v.value = INT_MAX;
+	for(int i = 0; i < 9; i++){
+		if(moveValid(&myBoard, i)){
+			v = min(v, maxValue(makeMove(myBoard, i)));
+			}		
+		}
+	return v;
+	}
 
 
 
@@ -112,7 +105,7 @@ Board TicTacToe::alphaBeta(Board myBoard, int depth, Board alpha, Board beta){
 
 bool TicTacToe::gameOver(Board* myBoard){
 	bool over = true;
-	int side = myBoard->side ^ 1;	//because makemove changes side
+	int side = myBoard->side;
 	//check columns
 	for(int i = 0; i < 3; i++){
 		over = true;
@@ -159,28 +152,24 @@ bool TicTacToe::gameOver(Board* myBoard){
 		}
 	return false;
 	}
-/*
-Board* TicTacToe::makeMove(Board* myBoard, int move){
-	Board *newBoard = myBoard;
-	newBoard->parent = myBoard;
-	newBoard->board[move] = myBoard->side;
-	newBoard->side ^= 1;
-	newBoard->lastMove = move;
-	newBoard->board[move] = myBoard->side;
-	return newBoard;
-	}
-*/
 
 Board TicTacToe::makeMove(Board myBoard, int move){
 	Board newBoard = myBoard;
 	newBoard.parent = &myBoard;
 	newBoard.board[move] = myBoard.side;
-	newBoard.side ^= 1;
 	newBoard.lastMove = move;
 	newBoard.board[move] = myBoard.side;
+	if(gameOver(&newBoard)){
+		if(newBoard.side == 0){
+			newBoard.value = 10;
+			}
+		else{
+			newBoard.value = -10;		
+			}
+		}	
+	newBoard.side ^= 1;
 	return newBoard;
 	}
-
 bool TicTacToe::moveValid(Board* myBoard, int move){
 	if(move < 0){
 		return false;
@@ -195,7 +184,6 @@ bool TicTacToe::moveValid(Board* myBoard, int move){
 	}
 
 void TicTacToe::printBoard(Board* myBoard){
-	cout<<"print board function\n";
 	cout<<	player[myBoard->board[0]]<<" | "<<
 	player[myBoard->board[1]]<<" | "<<
 	player[myBoard->board[2]]<<"\n"<<
@@ -208,7 +196,6 @@ void TicTacToe::printBoard(Board* myBoard){
 	}
 
 void TicTacToe::printCurBoard(){
-	cout<<"printing current board\n";
 	cout<<	player[curBoard->board[0]]<<" | "<<
 		player[curBoard->board[1]]<<" | "<<
 		player[curBoard->board[2]]<<"\n"<<
