@@ -11,17 +11,23 @@ void Game::playConnect4(){
 
 	Connect4 myGame;
 	myGame.printCurBoard();
-	int side = 0, move;
+	int side = 0, move = 0;
 	char player[2] = { 'X', 'O'};
 
-	cout<<"Select a column [0-6] > ";
-	cin>>move;	
-	
-	if(myGame.moveValid(move)){
-		myGame.makeMove(move);
+
+	while(!myGame.gameOver()){
+		cout<<"Select a column [0-6] > ";
+		cin>>move;	
+		if(myGame.moveValid(move)){
+			myGame.makeMove(move);
+			myGame.printCurBoard();
+			}
+		else{
+			cout<<"move is invalid, try again\n";
+			}
 		}
 
-	myGame.printCurBoard();
+//	myGame.printCurBoard();
 
 	}
 

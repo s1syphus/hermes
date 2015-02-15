@@ -10,26 +10,17 @@ the game client)
 
 
 
-REFACTOR!!!!!!!!!!!!!!!! Code is a mess right now
-
-
-
 To do:
 
-	Design driver
-	Make dummy classes
 
-	Make look-up table for tictactoe (for fun)
 
 	Implement:
-		tic-tak-toe
+		tic-tak-toe - Done
 		connect4
-		checkers
 		chess
 
 	threading
 	Networking	
-	Get doxygen working	
 
 
 

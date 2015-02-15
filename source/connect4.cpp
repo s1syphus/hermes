@@ -22,30 +22,36 @@ Connect4::~Connect4(){
 	}
  
 bool Connect4::moveValid(int move){
-	bool valid = true;
-
-	//this needs some work, check for column bounds and then if columns are available
-
-
-	return valid;
+	if(move > 7 || move < 0){
+		return false;
+		}
+	if(curBoard->board[0][move] == 2){
+		return true;
+		}
+	return false;
 	}
 
 bool Connect4::gameOver(){
 	//for curBoard
 	bool over = false;
 
+
+
+
+
+
 	return over;
 	}
 
 void Connect4::printCurBoard(){
-	char player[3] = {
+	char player[3] = {'X','O',' '};
 	for(int i = 0; i < 6; i++){
 		for(int j = 0; j < 7; j++){
-			cout<<player[curBoard->board[i][j]]<<" ";
+			cout<<player[curBoard->board[i][j]]<<" | ";
 			}
 		cout<<endl;
 		for(int j = 0; j < 7; j++){
-			cout<<"--";
+			cout<<"----";
 			}
 		cout<<endl;
 		}
@@ -67,6 +73,7 @@ void Connect4::makeMove(int move){
 		if(curBoard->board[i][move] == 2){
 			curBoard->board[i][move] = curBoard->side;
 			curBoard->side ^= 1;
+			curBoard->lastMove = move;
 			return;
 			}
 		}
