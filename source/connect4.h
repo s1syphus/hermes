@@ -14,7 +14,7 @@ struct c4Board{
 	int board[6][7];
 	int side;
 	int value;
-	int lastMove;
+	int lastMove[2];	//row, col
 
 	};
 

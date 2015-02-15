@@ -13,7 +13,9 @@ Connect4::Connect4(){
 		}
 	curBoard->side = 0;
 	curBoard->value = 0;
-	curBoard->lastMove = -1;
+	curBoard->lastMove[0] = -1;
+	curBoard->lastMove[1] = -1;
+
 	}
 
 Connect4::~Connect4(){
@@ -24,23 +26,50 @@ Connect4::~Connect4(){
 bool Connect4::moveValid(int move){
 	if(move > 7 || move < 0){
 		return false;
-		}
-	if(curBoard->board[0][move] == 2){
+		} if(curBoard->board[0][move] == 2){
 		return true;
 		}
 	return false;
 	}
 
-bool Connect4::gameOver(){
-	//for curBoard
-	bool over = false;
+bool Connect4::gameOver(){	//for current board
+	
+	/*
+
+	This is the right idea but I fucked up my indexing, fix soon, make sure to check
+	other functions as well
+	*/
 
 
+	int lastMove[2];
+	lastMove[0] = curBoard->lastMove[0];	//row
+	lastMove[1] = curBoard->lastMove[1];	//col
+	cout<<"last move: < "<<lastMove[0]<<", "<<lastMove[1]<<" >\n";
+//	int side = curBoard->side^1;	//make move switches side
+	int side = curBoard->side;	//make move switches side
 
+	int counter = 0;
+	//check horizontal moves, check boundary conditions
+	
+	for(int i = -3; i <= 3; i++){
+		if((lastMove[1] + i) >= 0 and (lastMove[1] + i) <= 6){
+			cout<<"looking at: <"<<lastMove[1] + i<<", "<<lastMove[1]<<"> : "<<curBoard->board[lastMove[1] + i][lastMove[0]]<<endl;
+			if(curBoard->board[i][lastMove[0]] == side){
+				counter++;	
+				if(counter == 4){
+					cout<<"game over!\n";
+					return true;
+					}
+				}
+			else{
+				counter = 0;
+				}
+			}
+		}
+	
 
+	return false;
 
-
-	return over;
 	}
 
 void Connect4::printCurBoard(){
@@ -72,8 +101,9 @@ void Connect4::makeMove(int move){
 	for(int i = 5; i >= 0; i--){
 		if(curBoard->board[i][move] == 2){
 			curBoard->board[i][move] = curBoard->side;
-			curBoard->side ^= 1;
-			curBoard->lastMove = move;
+	//		curBoard->side ^= 1;	 //for debug! fix!!!!!!!!!!!
+			curBoard->lastMove[0] = i;
+			curBoard->lastMove[1] = move;
 			return;
 			}
 		}
@@ -91,7 +121,9 @@ c4Board* Connect4::operator=(const c4Board* myBoard){
 		}
 	newBoard->side = myBoard->side;
 	newBoard->value = myBoard->value;
-	newBoard->lastMove = myBoard->lastMove;
+	newBoard->lastMove[0] = myBoard->lastMove[0];
+	newBoard->lastMove[1] = myBoard->lastMove[1];
+
 	return newBoard;
 	}
 
@@ -104,7 +136,9 @@ c4Board Connect4::operator=(const c4Board myBoard){
 		}
 	newBoard.side = myBoard.side;
 	newBoard.value = myBoard.value;
-	newBoard.lastMove = myBoard.lastMove;
+	newBoard.lastMove[0] = myBoard.lastMove[0];
+	newBoard.lastMove[1] = myBoard.lastMove[1];
+
 	return newBoard;
 	}
 
