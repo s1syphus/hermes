@@ -3,6 +3,13 @@
 
 #include "connect4.h"
 
+inline bool onBoard(int row, int col){
+	if(row >= 0 and row < 6 and col >= 0 and col < 7){
+		return true;
+		}
+	return false;
+	}
+
 Connect4::Connect4(){
 	//initialize board	
 	curBoard = new c4Board;
@@ -33,31 +40,19 @@ bool Connect4::moveValid(int move){
 	}
 
 bool Connect4::gameOver(){	//for current board
-	
-	/*
+	int lastRow = curBoard->lastMove[0];
+	int lastCol = curBoard->lastMove[1];
+	int newRow, newCol, counter;
+	int side = curBoard->side^1;
 
-	This is the right idea but I fucked up my indexing, fix soon, make sure to check
-	other functions as well
-	*/
-
-
-	int lastMove[2];
-	lastMove[0] = curBoard->lastMove[0];	//row
-	lastMove[1] = curBoard->lastMove[1];	//col
-	cout<<"last move: < "<<lastMove[0]<<", "<<lastMove[1]<<" >\n";
-//	int side = curBoard->side^1;	//make move switches side
-	int side = curBoard->side;	//make move switches side
-
-	int counter = 0;
-	//check horizontal moves, check boundary conditions
-	
+	//check vertical
+	counter = 0;
 	for(int i = -3; i <= 3; i++){
-		if((lastMove[1] + i) >= 0 and (lastMove[1] + i) <= 6){
-			cout<<"looking at: <"<<lastMove[1] + i<<", "<<lastMove[1]<<"> : "<<curBoard->board[lastMove[1] + i][lastMove[0]]<<endl;
-			if(curBoard->board[i][lastMove[0]] == side){
-				counter++;	
-				if(counter == 4){
-					cout<<"game over!\n";
+		newRow = lastRow + i;
+		if(onBoard(newRow, lastCol)){
+			if(curBoard->board[newRow][lastCol] == side){
+				counter++;
+				if(counter >= 4){
 					return true;
 					}
 				}
@@ -66,11 +61,63 @@ bool Connect4::gameOver(){	//for current board
 				}
 			}
 		}
-	
 
+	//check horizontal
+	for(int i = -3; i <= 3; i++){
+		newCol = lastCol + i;
+		if(onBoard(lastRow, newCol)){
+			if(curBoard->board[lastRow][newCol] == side){
+				counter++;
+				if(counter >= 4){
+					return true;
+					}
+				}
+			else{
+				counter = 0;
+				}
+			}
+		}
+
+	//check diagonal up to down
+	counter = 0;
+	for(int i = -3; i <= 3; i++){
+		newRow = lastRow + i;
+		newCol = lastCol + i; 
+		if(onBoard(newRow, newCol)){
+			if(curBoard->board[newRow][newCol] == side){
+				counter++;
+				if(counter >= 4){
+					cout<<"ended here\n";
+					return true;
+					}
+				}
+			else{
+				counter = 0;
+				}
+			}
+		}	
+
+	//check diagonal down to up
+	counter = 0;
+	for(int i = -3; i <= 3; i++){
+		newRow = lastRow - i;
+		newCol = lastCol + i; 
+		if(onBoard(newRow, newCol)){
+			if(curBoard->board[newRow][newCol] == side){
+				counter++;
+				if(counter >= 4){
+					return true;
+					}
+				}
+			else{
+				counter = 0;
+				}
+			}
+		}	
 	return false;
-
 	}
+
+
 
 void Connect4::printCurBoard(){
 	char player[3] = {'X','O',' '};
@@ -97,20 +144,16 @@ void Connect4::printBoard(const c4Board* myBoard){
 
 void Connect4::makeMove(int move){
 	//search from the "bottom" up
-
 	for(int i = 5; i >= 0; i--){
 		if(curBoard->board[i][move] == 2){
 			curBoard->board[i][move] = curBoard->side;
-	//		curBoard->side ^= 1;	 //for debug! fix!!!!!!!!!!!
+			curBoard->side ^= 1;
 			curBoard->lastMove[0] = i;
 			curBoard->lastMove[1] = move;
 			return;
 			}
 		}
 	}
-
-
-
 
 c4Board* Connect4::operator=(const c4Board* myBoard){
 	c4Board* newBoard = new c4Board;

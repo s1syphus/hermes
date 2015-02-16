@@ -26,8 +26,7 @@ void Game::playConnect4(){
 			cout<<"move is invalid, try again\n";
 			}
 		}
-
-//	myGame.printCurBoard();
+	cout<<"Game over!\nPlayer: "<<player[side]<<" is the winner!\n";
 
 	}
 

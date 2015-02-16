@@ -11,7 +11,7 @@ using namespace std;
 
 struct c4Board{
 
-	int board[6][7];
+	int board[6][7];	// row, col
 	int side;
 	int value;
 	int lastMove[2];	//row, col
@@ -23,6 +23,7 @@ class Connect4{
 	private:
 		c4Board* curBoard;
 	public:
+
 		//constructor
 		Connect4();
 		~Connect4();
@@ -49,7 +50,9 @@ class Connect4{
 		
 		//Start with minimax but make sure to do alphabeta
 		//also add transpotition tables
-		
+	
+
+
 	};
 
 #endif
