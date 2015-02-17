@@ -67,7 +67,7 @@ int Connect4::bestMove(int depth){
 	c4Board newBoard = *curBoard;
 
 	c4Board bestBoard = minimax(newBoard, depth);
-
+//	c4Board bestBoard = alphabeta(newBoard, depth);
 	printf("boards considered: %d\n",boardCount);
 	cout<<"best board has a value of: "<<bestBoard.value<<endl;
 	return bestBoard.lastMove[1];	//col is only "move"
