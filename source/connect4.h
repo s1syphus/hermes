@@ -8,9 +8,26 @@
 #include <climits>
 #include <time.h>
 #include <stdio.h>
+#include <stdlib.h>
+
 using namespace std;
 
-//typedef unsigned long long uint64;
+typedef unsigned long long uint64;
+
+inline bool onBoard(int row, int col){
+	if(row >= 0 and row < 6 and col >= 0 and col < 7){
+		return true;
+		}
+	return false;
+	}
+
+inline uint64 rand64(){
+	return 	((uint64)rand() | \
+		(uint64)rand() << 15 | \
+		(uint64)rand() << 30 | \
+		(uint64)rand() << 45 | \
+		((uint64)rand() & 0xf) << 60 );
+	}
 
 struct c4Board{
 
@@ -18,15 +35,15 @@ struct c4Board{
 	int side;
 	int value;
 	int lastMove[2];	//row, col
-//	uint64 hashValue;
+	uint64 hashKey;
 
 	};
-
 
 class Connect4{
 
 	private:
 		c4Board* curBoard;
+		void genHashKey(c4Board*);
 	public:
 
 		//constructor

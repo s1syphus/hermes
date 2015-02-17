@@ -3,15 +3,7 @@
 
 #include "connect4.h"
 
-
-int boardCount;
-
-inline bool onBoard(int row, int col){
-	if(row >= 0 and row < 6 and col >= 0 and col < 7){
-		return true;
-		}
-	return false;
-	}
+int boardCount;	//just for checking stuff, delete later
 
 Connect4::Connect4(){
 	//initialize board	
@@ -32,6 +24,13 @@ Connect4::~Connect4(){
 	//clean up memory
 	
 	}
+
+void Connect4::genHashKey(c4Board* myBoard){
+	//do stuff here
+	//generate and update hash key for myBoard	
+	}
+
+
 
 int Connect4::bestMove(int depth){
 
