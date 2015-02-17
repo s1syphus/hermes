@@ -10,23 +10,35 @@ Game::Game(){
 void Game::playConnect4(){
 
 	Connect4 myGame;
-	myGame.printCurBoard();
 	int side = 0, move = 0;
 	char player[2] = { 'X', 'O'};
-
+	// timer stuff
+	clock_t t;
+	int depth = 5;
 
 	while(!myGame.gameOver()){
-		cout<<"Select a column [0-6] > ";
-		cin>>move;	
-		if(myGame.moveValid(move)){
-			myGame.makeMove(move);
-			myGame.printCurBoard();
+		if(side == 1){
+			cout<<"Select a column [0-6] > ";
+			cin>>move;	
+			if(!myGame.moveValid(move)){
+				cout<<"move is invalid, try again\n";
+				}
 			}
 		else{
-			cout<<"move is invalid, try again\n";
+//			cout<<"depth > ";
+//			cin>>depth;
+//			depth = 7;
+			t = clock();
+			move = myGame.bestMove(depth);
+			t = clock() - t;
+			printf("Move took: %f seconds\n",((float) t)/CLOCKS_PER_SEC);
+
 			}
+		myGame.makeMove(move);
+		myGame.printCurBoard();
+		side ^= 1;
 		}
-	cout<<"Game over!\nPlayer: "<<player[side]<<" is the winner!\n";
+	cout<<"Game over!\nPlayer: "<<player[side^1]<<" is the winner!\n";
 
 	}
 

@@ -3,6 +3,9 @@
 
 #include "connect4.h"
 
+
+int boardCount;
+
 inline bool onBoard(int row, int col){
 	if(row >= 0 and row < 6 and col >= 0 and col < 7){
 		return true;
@@ -29,30 +32,121 @@ Connect4::~Connect4(){
 	//clean up memory
 	
 	}
- 
-bool Connect4::moveValid(int move){
-	if(move > 7 || move < 0){
-		return false;
-		} if(curBoard->board[0][move] == 2){
-		return true;
-		}
-	return false;
+
+int Connect4::bestMove(int depth){
+
+	//might be able to remove this function
+	//keeping it for now for cleaner debug
+	//
+	//
+	boardCount = 0;
+	c4Board bestBoard = minimax(*curBoard, depth);
+	printf("boards considered: %d\n",boardCount);
+	return bestBoard.lastMove[1];	//col is only "move"
 	}
 
-bool Connect4::gameOver(){	//for current board
-	int lastRow = curBoard->lastMove[0];
-	int lastCol = curBoard->lastMove[1];
-	int newRow, newCol, counter;
-	int side = curBoard->side^1;
 
+c4Board Connect4::minimax(c4Board myBoard, int depth){
+
+	c4Board bestBoard = myBoard;
+	c4Board tempBoard = myBoard;
+	bestBoard.value = INT_MIN;
+	tempBoard.value = INT_MIN;
+	for(int i = 0; i < 9; i++){
+		if(moveValid(&myBoard, i)){
+			tempBoard = minValue(makeMove(myBoard,i), depth - 1);
+			if(tempBoard.value > bestBoard.value){	
+				bestBoard = tempBoard;
+				}
+			}
+		}	
+	return bestBoard;
+	}
+
+c4Board Connect4::maxValue(c4Board myBoard, int depth){
+	c4Board v = myBoard;
+	if(gameOver(&myBoard) || depth == 0){
+		return myBoard;
+		}
+	v.value = INT_MIN;
+	for(int i = 0; i < 9; i++){
+		if(moveValid(&myBoard, i)){
+			boardCount++;//temp
+			v = max(v, minValue(makeMove(myBoard, i), depth - 1));
+			}		
+		}
+	return v;
+	}
+
+
+c4Board Connect4::minValue(c4Board myBoard, int depth){
+	c4Board v = myBoard;
+	if(gameOver(&myBoard) || depth == 0){
+		return myBoard;
+		}
+	v.value = INT_MAX;
+	for(int i = 0; i < 9; i++){
+		if(moveValid(&myBoard, i)){
+			boardCount++;//temp
+			v = min(v, maxValue(makeMove(myBoard, i), depth - 1));
+			}		
+		}
+	return v;
+	}
+
+
+c4Board Connect4::max(c4Board first, c4Board second){
+	if(first.value > second.value){
+		return first;
+		}
+	return second;
+	}
+
+c4Board Connect4::min(c4Board first, c4Board second){
+	if(first.value < second.value){
+		return first;
+		}
+	return second;
+	}
+
+
+c4Board Connect4::makeMove(c4Board myBoard, int move){
+	for(int i = 5; i >= 0; i--){
+		if(myBoard.board[i][move] == 2){
+			myBoard.board[i][move] = myBoard.side;
+			myBoard.lastMove[0] = i;
+			myBoard.lastMove[1] = move;
+			if(gameOver(&myBoard)){
+				if(myBoard.side == 0){
+					myBoard.value = 10;
+					}
+				else{
+					myBoard.value = -10;
+					}
+				}
+			myBoard.side ^= 1;
+			return myBoard;
+			}
+		}
+
+	return myBoard;	//should never get here, move is assumed valid
+			//and checked before function is called
+	}
+
+bool Connect4::gameOver(c4Board* myBoard){
+	int lastRow = myBoard->lastMove[0];
+	int lastCol = myBoard->lastMove[1];
+	int newRow, newCol, counter;
+	int side = myBoard->side^1;
 	//check vertical
 	counter = 0;
 	for(int i = -3; i <= 3; i++){
 		newRow = lastRow + i;
 		if(onBoard(newRow, lastCol)){
-			if(curBoard->board[newRow][lastCol] == side){
+			if(myBoard->board[newRow][lastCol] == side){
 				counter++;
 				if(counter >= 4){
+//					cout<<"won vertical\n";
 					return true;
 					}
 				}
@@ -63,12 +157,15 @@ bool Connect4::gameOver(){	//for current board
 		}
 
 	//check horizontal
+	counter = 0;
 	for(int i = -3; i <= 3; i++){
 		newCol = lastCol + i;
 		if(onBoard(lastRow, newCol)){
-			if(curBoard->board[lastRow][newCol] == side){
+			if(myBoard->board[lastRow][newCol] == side){
 				counter++;
 				if(counter >= 4){
+//					cout<<"won horizontal\n";
+
 					return true;
 					}
 				}
@@ -84,10 +181,10 @@ bool Connect4::gameOver(){	//for current board
 		newRow = lastRow + i;
 		newCol = lastCol + i; 
 		if(onBoard(newRow, newCol)){
-			if(curBoard->board[newRow][newCol] == side){
+			if(myBoard->board[newRow][newCol] == side){
 				counter++;
 				if(counter >= 4){
-					cout<<"ended here\n";
+//					cout<<"won up to down\n";
 					return true;
 					}
 				}
@@ -103,9 +200,10 @@ bool Connect4::gameOver(){	//for current board
 		newRow = lastRow - i;
 		newCol = lastCol + i; 
 		if(onBoard(newRow, newCol)){
-			if(curBoard->board[newRow][newCol] == side){
+			if(myBoard->board[newRow][newCol] == side){
 				counter++;
 				if(counter >= 4){
+//					cout<<"won down to up\n";
 					return true;
 					}
 				}
@@ -117,7 +215,27 @@ bool Connect4::gameOver(){	//for current board
 	return false;
 	}
 
+bool Connect4::moveValid(c4Board* myBoard, int move){
+	if(move > 7 || move < 0){
+		return false;
+		} 
+	if(myBoard->board[0][move] == 2){
+		return true;
+		}
+	return false;
+	}
+bool Connect4::moveValid(int move){
+	if(move > 7 || move < 0){
+		return false;
+		} if(curBoard->board[0][move] == 2){
+		return true;
+		}
+	return false;
+	}
 
+bool Connect4::gameOver(){	//for current board
+	return gameOver(curBoard);
+	}
 
 void Connect4::printCurBoard(){
 	char player[3] = {'X','O',' '};
@@ -143,6 +261,7 @@ void Connect4::printBoard(const c4Board* myBoard){
 	}	
 
 void Connect4::makeMove(int move){
+//	cout<<"checking col: "<<move<<endl;
 	//search from the "bottom" up
 	for(int i = 5; i >= 0; i--){
 		if(curBoard->board[i][move] == 2){
@@ -150,6 +269,7 @@ void Connect4::makeMove(int move){
 			curBoard->side ^= 1;
 			curBoard->lastMove[0] = i;
 			curBoard->lastMove[1] = move;
+			cout<<"Making move: "<<i<<", "<<move<<endl;
 			return;
 			}
 		}

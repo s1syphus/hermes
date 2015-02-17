@@ -61,7 +61,7 @@ Board TicTacToe::minimaxDecision(Board myBoard){
 	for(int i = 0; i < 9; i++){
 		if(moveValid(&myBoard, i)){
 			tempBoard = minValue(makeMove(myBoard,i));
-				if(tempBoard.value > bestBoard.value){	
+			if(tempBoard.value > bestBoard.value){	
 				bestBoard = tempBoard;
 				bestBoard.lastMove = i;
 				}
