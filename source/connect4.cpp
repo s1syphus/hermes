@@ -38,7 +38,7 @@ int Connect4::bestMove(int depth){
 	//keeping it for now for cleaner debug
 	//
 	
-	depth = 3;
+	depth = 8;
 		/*
 	cout<<"here testing stuff\n";	
 
@@ -85,7 +85,7 @@ c4Board Connect4::minimax(c4Board myBoard, int depth){
 	tempBoard.value = INT_MIN;
 	for(int i = 0; i < 7; i++){
 		if(moveValid(&myBoard, i)){
-			tempBoard = minValue(makeMove(myBoard, i), depth);
+			tempBoard = minValue(makeMove(myBoard, i), depth-1);
 			if(tempBoard.value > bestBoard.value){
 				bestBoard = tempBoard;
 				bestBoard.lastMove[1] = i;
@@ -115,6 +115,7 @@ c4Board Connect4::maxValue(c4Board myBoard, int depth){
 
 c4Board Connect4::minValue(c4Board myBoard, int depth){
 	if(gameOver(&myBoard) || depth == 0){
+		//cout<<"min wins!\n";
 		return myBoard;
 		}
 	c4Board v = myBoard;
@@ -144,11 +145,12 @@ c4Board Connect4::min(c4Board first, c4Board second){
 
 c4Board Connect4::makeMove(c4Board myBoard, int move){
 	for(int i = 5; i >= 0; i--){
-			if(myBoard.board[i][move] == 2){
+		if(myBoard.board[i][move] == 2){
 			myBoard.board[i][move] = myBoard.side;
 			myBoard.lastMove[0] = i;
 			myBoard.lastMove[1] = move;
 			if(gameOver(&myBoard)){
+//				printBoard(&myBoard);
 				if(myBoard.side == 0){
 					myBoard.value = 10;
 					}
@@ -169,7 +171,7 @@ c4Board Connect4::makeMove(c4Board myBoard, int move){
 bool Connect4::gameOver(c4Board* testBoard){
 	//"connect 3" currently
 
-	int connect = 3;
+	int connect = 4;
 
 	c4Board myBoard = *testBoard;
 	int lastRow = myBoard.lastMove[0];
@@ -404,7 +406,7 @@ void Connect4::makeMove(int move){
 			curBoard->lastMove[0] = i;
 			curBoard->lastMove[1] = move;
 			curBoard->side ^= 1;
-			cout<<"Making move: "<<i<<", "<<move<<endl;
+	//		cout<<"Making move: "<<i<<", "<<move<<endl;
 			return;
 			}
 		}
