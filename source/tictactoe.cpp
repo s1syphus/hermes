@@ -170,6 +170,7 @@ Board TicTacToe::makeMove(Board myBoard, int move){
 	newBoard.side ^= 1;
 	return newBoard;
 	}
+
 bool TicTacToe::moveValid(Board* myBoard, int move){
 	if(move < 0){
 		return false;

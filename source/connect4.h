@@ -14,6 +14,7 @@ using namespace std;
 
 typedef unsigned long long uint64;
 
+
 inline bool onBoard(int row, int col){
 	if(row >= 0 and row < 6 and col >= 0 and col < 7){
 		return true;
@@ -59,7 +60,7 @@ class Connect4{
 		//general functions
 
 		void printCurBoard();
-		void printBoard(const c4Board*);
+		void printBoard(c4Board*);
 
 		//gameplay, on curBoard
 		bool moveValid(int);

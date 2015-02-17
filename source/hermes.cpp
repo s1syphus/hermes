@@ -14,7 +14,6 @@ int main(int argc, char* argv[]){
 
 //	game.playTicTacToe();
 	//this works
-	//for testing just starting tictactoe, change to commandline args soon	
 
 
 	game.playConnect4();

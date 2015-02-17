@@ -14,8 +14,7 @@ void Game::playConnect4(){
 	char player[2] = { 'X', 'O'};
 	// timer stuff
 	clock_t t;
-	int depth = 5;
-
+	int depth = 1;
 	while(!myGame.gameOver()){
 		if(side == 1){
 			cout<<"Select a column [0-6] > ";
@@ -38,6 +37,12 @@ void Game::playConnect4(){
 		myGame.printCurBoard();
 		side ^= 1;
 		}
+
+	//for debug
+
+	
+
+
 	cout<<"Game over!\nPlayer: "<<player[side^1]<<" is the winner!\n";
 
 	}
