@@ -28,8 +28,8 @@ class Game{
 		//constructors
 		Game();
 		//Game(enum Game); // fix this
-		void playTicTacToe();
-		void playConnect4();
+		void playTicTacToe(int);
+		void playConnect4(int);
 	};
 
 

@@ -7,7 +7,7 @@ Game::Game(){
 
 	}
 
-void Game::playConnect4(){
+void Game::playConnect4(int selection){
 
 	Connect4 myGame;
 	int side = 0, move = 0;
@@ -15,6 +15,9 @@ void Game::playConnect4(){
 	// timer stuff
 	clock_t t;
 	int depth = 1;
+
+	//do stuff with selection
+
 	while(!myGame.gameOver()){
 		if(side == 1){
 			cout<<"Select a column [0-6] > ";
@@ -48,8 +51,7 @@ void Game::playConnect4(){
 	}
 
 
-
-void Game::playTicTacToe(){
+void Game::playTicTacToe(int selection){
 
 	TicTacToe myGame;
 	int move;
@@ -59,56 +61,60 @@ void Game::playTicTacToe(){
 	myGame.printInstructions();
 	bool gameOver = false;
 
-	/*	
-	Two player works!
-	*/
-/*
-	while(!gameOver){
-		cout<<"Player "<<player[side]<<" select square> ";
-		cin>>move;			
-		cout<<endl;		
-		if(myGame.moveValid(move)){
-			myGame.makeMove(move);
-			gameOver = myGame.gameOver();
-			}
-		myGame.printCurBoard();
-		side ^= 1;	// switches side, love dem bit operations
-		}
-	cout<<"Game is over!\nSide: "<<(side^1)<<" is the winner!\n";
-	*/	
-	/*
-	One player
-	*/
-	int counter = 0;
-	while((!gameOver) && (counter <= 8)){
-		if(side == 1){
+	if(selection == 2){
+
+		/*	
+		Two player works!
+		*/
+
+		while(!gameOver){
 			cout<<"Player "<<player[side]<<" select square> ";
 			cin>>move;			
 			cout<<endl;		
-			}
-		else{
-			cout<<"CPU is playing\n";
-			move = myGame.bestMove();
-			cout<<"move = "<<move<<endl;
-			}
-		if(myGame.moveValid(move)){
-			myGame.makeMove(move);
-			gameOver = myGame.gameOver();
+			if(myGame.moveValid(move)){
+				myGame.makeMove(move);
+				gameOver = myGame.gameOver();
+				}
 			myGame.printCurBoard();
 			side ^= 1;
 			}
-		else{
-			cout<<"bad move\n";
-			}
-		counter++;
-		}
-	if(gameOver){
 		cout<<"Game is over!\nSide: "<<(side^1)<<" is the winner!\n";
-		}
-	else{
-		cout<<"Game is a draw\n";
-		}
+	}
 
+	else{
+		/*
+		One player
+		*/
+		int counter = 0;
+		while((!gameOver) && (counter <= 8)){
+			if(side == 1){
+				cout<<"Player "<<player[side]<<" select square> ";
+				cin>>move;			
+				cout<<endl;		
+				}
+			else{
+				cout<<"CPU is playing\n";
+				move = myGame.bestMove();
+//				cout<<"move = "<<move<<endl;
+				}
+			if(myGame.moveValid(move)){
+				myGame.makeMove(move);
+				gameOver = myGame.gameOver();
+				myGame.printCurBoard();
+				side ^= 1;
+				}
+			else{
+				cout<<"bad move\n";
+				}
+			counter++;
+			}
+		if(gameOver){
+			cout<<"Game is over!\nSide: "<<(side^1)<<" is the winner!\n";
+			}
+		else{
+			cout<<"Game is a draw\n";
+			}
+		}
 
 	}
 
