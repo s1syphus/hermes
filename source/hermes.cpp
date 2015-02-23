@@ -11,7 +11,7 @@ int main(int argc, char* argv[]){
 
 	Game game;
 	int selection;
-	cout<<"Welcome to Hermes!\nSelect Game Below:\n1) TicTacToe\n2) Connect 4\n3) Chess (not working yet)\n> ";
+	cout<<"Welcome to Hermes!\nSelect Game Below:\n1) TicTacToe\n2) Connect 4\n> ";
 	cin>>selection;
 		
 	switch(selection){
@@ -25,10 +25,6 @@ int main(int argc, char* argv[]){
 			cout<<"You have selected Connect 4 (still in development)\nSelect Game Mode:\n1) One Player\n2) Two Player\n> ";
 			cin>>selection;
 			game.playConnect4(selection);
-			break;
-			}
-		case 3: {
-			cout<<"You have selected Chess, sadly this is not working yet =(\n";
 			break;
 			}
 		default:
